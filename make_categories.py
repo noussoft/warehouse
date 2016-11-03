@@ -40,7 +40,10 @@ def get_categories(html):
     categories = dict()
     for i, item in enumerate(items):
 
-        matches = re.match(r'(\d{1,2})\.(\d{1,2})?\.?(\d{1,2})?\.?(.*)', item.get_text().strip(), re.S)
+        matches = re.match(
+            r'(\d{1,2})\.(\d{1,2})?\.?(\d{1,2})?\.?(.*)',
+            item.get_text().strip()
+        )
         
         if (matches and matches.groups()[0] == '2'):
 
@@ -56,7 +59,9 @@ def get_categories(html):
 
 def main():
     engine = create_engine(
-        'mysql://{}:{}@localhost/{}?charset=utf8'.format(DB_USER, DB_PASSWORD, DB_NAME)
+        'mysql://{}:{}@localhost/{}?charset=utf8'.format(
+            DB_USER, DB_PASSWORD, DB_NAME
+        )
     )
 
     if not database_exists(engine.url):
