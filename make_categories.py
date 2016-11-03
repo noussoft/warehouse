@@ -32,6 +32,10 @@ def get_categories(html):
         
         if (matches and matches.groups()[0] == '2'):
 
+            # skip title
+            if (matches.groups()[1] == None):
+                continue
+
             if (matches.groups()[2] == None):
                 categories[matches.groups()[3].strip()] = []
                 parent_id = matches.groups()[1]
