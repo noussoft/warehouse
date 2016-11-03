@@ -48,11 +48,11 @@ def get_categories(html):
         if (matches and matches.groups()[0] == '2'):
 
             if (matches.groups()[2] == None):
-                categories[matches.groups()[3]] = []
+                categories[matches.groups()[3].strip()] = []
                 parent_id = matches.groups()[1]
-                parent_name = matches.groups()[3]
+                parent_name = matches.groups()[3].strip()
             elif (matches.groups()[1] == parent_id):
-                categories[parent_name].append(matches.groups()[3])
+                categories[parent_name].append(matches.groups()[3].strip())
     
     return categories
 
