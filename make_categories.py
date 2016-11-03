@@ -1,6 +1,5 @@
 import re
 import urllib.request
-import pprint
 
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, ForeignKey
@@ -29,7 +28,6 @@ class Category(Base):
         lazy="dynamic"
     )
 
-
 def get_html(url):
     response = urllib.request.urlopen(url)
     return response.read()
@@ -41,10 +39,11 @@ def get_categories(html):
     
     categories = dict()
     for i, item in enumerate(items):
-        # //print(item.get_text().strip())
+
         matches = re.match(r'(\d{1,2})\.(\d{1,2})?\.?(\d{1,2})?\.?(.*)', item.get_text().strip(), re.S)
+        
         if (matches and matches.groups()[0] == '2'):
-            print(matches.groups())
+
             if (matches.groups()[2] == None):
                 categories[matches.groups()[3]] = []
                 parent_id = matches.groups()[1]
@@ -68,7 +67,7 @@ def main():
     session = Session()
     
     categories = get_categories(get_html(URL_TO_PARSE))
-    pprint.pprint(categories)
+
     for name in categories:
         category = Category(name = name)
         session.add(category)
