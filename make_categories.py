@@ -2,10 +2,7 @@ import re
 import urllib.request
 
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import relationship, backref
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_utils.functions import database_exists
 from sqlalchemy_utils.functions import create_database
 
@@ -13,20 +10,8 @@ from bs4 import BeautifulSoup
 
 from settings import DB_USER, DB_PASSWORD, DB_NAME
 from settings import URL_TO_PARSE
+from models import Category, Base
 
-Base = declarative_base()
-
-class Category(Base):
-    __tablename__ = 'categories'
-    id = Column(Integer, primary_key = True)
-    name =  Column(String(255), index = True)
-    parent_id = Column(Integer, ForeignKey('categories.id'))
-
-    categories = relationship(
-        "Category",
-        backref = backref('main_category', remote_side=id),
-        lazy="dynamic"
-    )
 
 def get_html(url):
     response = urllib.request.urlopen(url)
