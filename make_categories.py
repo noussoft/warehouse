@@ -25,10 +25,8 @@ def get_categories(html):
     categories = dict()
     for i, item in enumerate(items):
 
-        matches = re.match(
-            r'(\d{1,2})\.(\d{1,2})?\.?(\d{1,2})?\.?(.*)',
-            item.get_text().strip()
-        )
+        regexp = re.compile(r'(\d{1,2})\.(\d{1,2})?\.?(\d{1,2})?\.?(.*)')
+        matches = regexp.match(item.get_text().strip())
         
         if (matches and matches.groups()[0] == '2'):
 
