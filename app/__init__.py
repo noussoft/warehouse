@@ -17,8 +17,10 @@ def create_app():
         except:
             pass
 
+    import app.category.controllers as category
     import app.general.controllers as general
 
+    app.register_blueprint(category.module)
     app.register_blueprint(general.module)
 
     return app
