@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block meta_title %} База {% endblock %}
+
+{% block menu_categories %}
+    {% if categories %}
+    <div class="col-md-3">
+        <p class="lead">Категории продукции</p>
+        <div class="list-group">
+        {% for category in categories %}
+            <a href="#" class="list-group-item">{{ category }}</a>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
