@@ -35,3 +35,6 @@ class Tenant(db.Model):
     # {64}@{255} RFC 3696
     email = db.Column(db.String(320), index = False)
     www = db.Column(db.String(255), index = False)
+
+    def __str__(self):
+        return self.name
