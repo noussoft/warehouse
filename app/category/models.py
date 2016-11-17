@@ -1,5 +1,10 @@
 from app.database import db
 
+categories_tenants_table = db.Table('categories_tenants',
+    db.Column('category_id', db.Integer, db.ForeignKey('categories.id')),
+    db.Column('tenant_id', db.Integer, db.ForeignKey('tenants.id'))
+)
+
 class Category(db.Model):
     __tablename__ = 'categories'
 
@@ -13,5 +18,20 @@ class Category(db.Model):
         lazy="dynamic"
     )
 
+    tenants = db.relationship("Tenant",
+        secondary=categories_tenants_table,
+        backref=db.backref("categories", lazy='dynamic'))
+
+
     def __str__(self):
         return self.name
+
+class Tenant(db.Model):
+    __tablename__ = 'tenants'
+
+    id = db.Column(db.Integer, primary_key = True)
+    name =  db.Column(db.String(255), index = True)
+    phone = db.Column(db.String(11), index = False)
+    # {64}@{255} RFC 3696
+    email = db.Column(db.String(320), index = False)
+    www = db.Column(db.String(255), index = False)
