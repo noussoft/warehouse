@@ -2,7 +2,21 @@ from flask_admin.contrib.sqla import ModelView
 from wtforms.validators import InputRequired, Email, URL, Regexp
 
 class CategoryView(ModelView):
-        pass
+    form_args = {
+        'name': {
+            'label': 'Название категории',
+            'validators': [InputRequired("Введите название категории")]
+        },
+        'tenants': {
+            'label': 'Арендаторы',
+        },
+        'categories': {
+            'label': 'Подкатегории товаров',
+        },
+        'main_category': {
+            'label': 'Основная категория',
+        },
+    }
 
 class TenantView(ModelView):
     form_args = {
