@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_migrate import Migrate
 from .database import db
 
 def create_app():
@@ -7,6 +8,8 @@ def create_app():
     app.config.from_object(os.environ['APP_SETTINGS'])
 
     db.init_app(app)
+    migrate = Migrate(app, db)
+    
     with app.test_request_context():
         db.create_all()
 
