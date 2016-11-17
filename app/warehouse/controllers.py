@@ -6,7 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from .models import Category
 
-module = Blueprint('category', __name__)
+module = Blueprint('warehouse', __name__)
 
 def log_error(*args, **kwargs):
     current_app.logger.error(*args, **kwargs)
@@ -28,7 +28,7 @@ def index(id):
         category = categories[0]
     
     return render_template(
-        'category/index.html',
+        'warehouse/index.html',
         categories=categories,
         category=category
     )
