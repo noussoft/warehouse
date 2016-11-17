@@ -8,9 +8,32 @@
         <p class="lead">Категории продукции</p>
         <div class="list-group">
         {% for category in categories %}
-            <a href="#" class="list-group-item">{{ category }}</a>
+            <a href="{{ url_for('category.index', id=category.id) }}" class="list-group-item">{{ category }}</a>
         {% endfor %}
         </div>
     </div>
     {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    {% for tenant in category.tenants %}
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="thumbnail">
+            <img src="http://placehold.it/320x150" alt="">
+            <div class="caption">
+                <h4><a href="#">{{ tenant|e }}</a></h4>
+                <p>{{ "+7(%s) %s-%s-%s"|format(tenant.phone[:3], tenant.phone[3:5], tenant.phone[5:7],tenant.phone[7:]) |e }}</p>
+            {% if tenant.email is not none %}
+                <p>{{ tenant.email|e }}</p>
+            {% endif %}
+            {% if tenant.www is not none %}
+                <p><a href="#">{{ tenant.www|e }}</a></p>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
