@@ -1,7 +1,9 @@
 import os
+
 from flask import Flask
 from flask_admin import Admin
 from flask_migrate import Migrate
+from flask_babelex import Babel
 
 from .warehouse.admin.views import CategoryView, TenantView
 from .warehouse.models import Category, Tenant
@@ -11,11 +13,15 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(os.environ['APP_SETTINGS'])
 
-    
+    babel = Babel(app)
+
+    @babel.localeselector
+    def get_locale():
+        return 'ru'
 
     admin = Admin(app, template_mode='bootstrap3')
-    admin.add_view(CategoryView(Category, db.session))
-    admin.add_view(TenantView(Tenant, db.session))
+    admin.add_view(TenantView(Tenant, db.session, name="Арендаторы"))
+    admin.add_view(CategoryView(Category, db.session, name="Категории товаров"))
 
     db.init_app(app)
     migrate = Migrate(app, db)

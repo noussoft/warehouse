@@ -2,6 +2,9 @@ from flask_admin.contrib.sqla import ModelView
 from wtforms.validators import InputRequired, Email, URL, Regexp
 
 class CategoryView(ModelView):
+    column_labels = dict(
+        name='Название категории', main_category='Основная категория'
+    )
     form_args = {
         'name': {
             'label': 'Название категории',
@@ -19,6 +22,17 @@ class CategoryView(ModelView):
     }
 
 class TenantView(ModelView):
+    column_labels = dict(
+        name='Арендатор',
+        phone='Телефон',
+        email='Эл. почта',
+        www='Адрес сайта',
+        place='Месторасположение',
+        address='Адрес',
+        about='Информация',
+        image='Изображение',
+        contact='Конт. лицо',
+    )
     form_args = {
         'name': {
             'label': 'Арендатор',
