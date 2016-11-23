@@ -2,22 +2,43 @@
 
 {% block meta_title %} - Схема {% endblock %}
 
-{% block menu_categories %}
-    {% if categories %}
-    <div class="col-md-3">
-        <p class="lead">Категории продукции</p>
-        <div class="list-group">
-        {% for category in categories %}
-            <a href="{{ url_for('warehouse.index', id=category.id) }}" class="list-group-item">{{ category }}</a>
-        {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-{% endblock %}
+{% block additional_assets %}
+    <!-- Add mousewheel plugin (this is optional) -->
+    <script type="text/javascript" src="{{ url_for('static', filename='fancybox/lib/jquery.mousewheel-3.0.6.pack.js') }}"></script>
+
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='fancybox/source/jquery.fancybox.css') }}" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{ url_for('static', filename='fancybox/source/jquery.fancybox.pack.js') }}"></script>
+{% endblock additional_assets %}
 
 {% block content %}
 
 <div class="row">
-    
+    <div class="col-sm-12 col-lg-12 col-md-12">
+        <div class="thumbnail">
+            <div class="img-thumbnail schema">
+                <a class="fancybox" href="{{url_for('static', filename='img/schema_vrubova_36.jpg')}}" id="grouped_elements" rel="group_schema">
+                    <img src="{{url_for('static', filename='img/schema_vrubova_36_thumb.jpg')}}" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-12 col-md-12">
+        <div class="thumbnail">
+            <div class="img-thumbnail schema">
+                <a class="fancybox" href="{{url_for('static', filename='img/schema_vrubova_40.jpg')}}" id="grouped_elements" rel="group_schema">
+                    <img src="{{url_for('static', filename='img/schema_vrubova_40_thumb.jpg')}}" />
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
+
+{% block additional_scripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fancybox").fancybox();
+    });
+</script>
+{% endblock additional_scripts %}
