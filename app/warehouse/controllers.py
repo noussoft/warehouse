@@ -1,12 +1,16 @@
 from flask import (
     Blueprint,
     render_template,
+    redirect,
+    url_for,
 )
 from sqlalchemy.exc import SQLAlchemyError
 
 from .models import Category
 
 module = Blueprint('warehouse', __name__)
+
+allowed_static_pages = ['about', 'contacts', 'schema']
 
 def log_error(*args, **kwargs):
     current_app.logger.error(*args, **kwargs)
@@ -35,4 +39,6 @@ def index(id):
 
 @module.route('/<string:page_name>/')
 def static_page(page_name):
-    return render_template('warehouse/%s.html' % page_name)
+    if page_name in allowed_static_pages:
+        return render_template('warehouse/%s.html' % page_name)
+    return redirect(url_for('warehouse.index'))
