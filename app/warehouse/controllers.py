@@ -32,3 +32,7 @@ def index(id):
         categories=categories,
         category=category
     )
+
+@module.route('/<string:page_name>/')
+def static_page(page_name):
+    return render_template('warehouse/%s.html' % page_name)
