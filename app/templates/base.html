@@ -45,10 +45,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">О нас</a>
+                        <a href="{{ url_for('warehouse.static_page', page_name='about') }}">О нас</a>
                     </li>
                     <li>
-                        <a href="#">Контакты</a>
+                        <a href="{{ url_for('warehouse.static_page', page_name='contacts') }}">Контакты</a>
                     </li>
                 </ul>
             </div>
