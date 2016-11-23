@@ -19,13 +19,8 @@ def log_error(*args, **kwargs):
 @module.route('/categories/<id>', methods=['GET'])
 @module.route('/', methods=['GET'], defaults={'id': None})
 def index(id):
-    categories = None
-    try:
-        categories = Category.query.filter(Category.parent_id.is_(None)).all()
-    except SQLAlchemyError as e:
-        log_error('Error while querying database', exc_info=e)
-        flash('There was uncaught database query', 'danger')
-        abort(500)
+    categories = get_categories()
+
     if id is not None:
         category = Category.query.get(id)
     else:
@@ -40,5 +35,17 @@ def index(id):
 @module.route('/<string:page_name>/')
 def static_page(page_name):
     if page_name in allowed_static_pages:
-        return render_template('warehouse/%s.html' % page_name)
+        return render_template(
+            'warehouse/%s.html' % page_name,
+            categories=get_categories()
+        )
     return redirect(url_for('warehouse.index'))
+
+def get_categories():
+    try:
+        categories = Category.query.filter(Category.parent_id.is_(None)).all()
+    except SQLAlchemyError as e:
+        log_error('Error while querying database', exc_info=e)
+        flash('There was uncaught database query', 'danger')
+        abort(500)
+    return categories
