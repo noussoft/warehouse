@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block meta_title %}{% endblock %}
+
+{% block content %}
+<div class="thumbnail">
+    <img class="img-responsive" src="http://placehold.it/800x300" alt="">
+    <div class="caption-full">
+        <h4 class="pull-right">{{ tenant.place|e if tenant.place is not none }}</h4>
+        <h4><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">{{ tenant.name }}</a>
+        </h4>
+        {% if tenant.www is not none %}
+        <p>WWW: <a target="_blank" href="{{ tenant.www }}">{{ tenant.www|e  }}</a></p>
+        {% endif %}
+        <p>Тел. <strong>8 {{ tenant.phone|e if tenant.phone is not none }}</strong></p>
+        <p>{{ tenant.about|e if tenant.about is not none }}</p>
+        <p>
+            <strong>Категории:</strong>
+            {% for category in tenant.categories %}
+                <a href="{{ url_for('warehouse.index', id=category.id) }}">{{category}}</a>{{',' if not loop.last}}
+            {% endfor %}
+        </p>
+    </div>
+    
+</div>
+{% endblock %}

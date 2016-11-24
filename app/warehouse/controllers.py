@@ -6,7 +6,8 @@ from flask import (
 )
 from sqlalchemy.exc import SQLAlchemyError
 
-from .models import Category
+from .models import Category, Tenant
+from ..utils.flask_utils import get_object_or_404
 
 module = Blueprint('warehouse', __name__)
 
@@ -30,6 +31,16 @@ def index(id):
         'warehouse/index.html',
         categories=categories,
         category=category
+    )
+
+@module.route('/tenants/<id>', methods=['GET'])
+def show_tenant(id):
+    
+    tenant = get_object_or_404(Tenant, Tenant.id == id)
+    return render_template(
+        'warehouse/tenants.html',
+        tenant=tenant,
+        categories=get_categories()
     )
 
 @module.route('/<string:page_name>/')

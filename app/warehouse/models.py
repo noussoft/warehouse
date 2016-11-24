@@ -37,7 +37,7 @@ class Tenant(db.Model):
     www = db.Column(db.String(255), index = False)
     place = db.Column(db.String(255), index = False)
     address = db.Column(db.String(255), index = False)
-    about = db.Column(db.String(255), index = False)
+    about = db.Column(db.Text, index = False)
     image = db.Column(db.String(255), index = False)
     contact = db.Column(db.String(255), index = False)
 
