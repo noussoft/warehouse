@@ -48,7 +48,7 @@
                 <p>{{ tenant.email|e }}</p>
             {% endif %}
             {% if tenant.www is not none %}
-                <p><a href="#">{{ tenant.www|e }}</a></p>
+                <p><a href="{{ tenant.www|e }}">{{ tenant.www|e }}</a></p>
             {% endif %}
             </div>
         </div>
