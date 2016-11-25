@@ -12,24 +12,35 @@
 {% endblock additional_assets %}
 
 {% block content %}
-
+<!-- Portfolio Item Heading -->
 <div class="row">
-    <div class="col-sm-12 col-lg-12 col-md-12">
-        <div class="thumbnail">
-            <div class="img-thumbnail schema">
-                <a class="fancybox" href="{{url_for('static', filename='img/schema_vrubova_36.jpg')}}" id="grouped_elements" rel="group_schema">
-                    <img src="{{url_for('static', filename='img/schema_vrubova_36_thumb.jpg')}}" />
-                </a>
-            </div>
+    <div class="col-lg-12">
+        <h1 class="page-header">Схема
+            <small>База на Врубовой</small>
+        </h1>
+    </div>
+</div>
+<!-- /.row -->
+<div class="row col-sm-12 col-lg-12 col-md-12">
+    <div class="thumbnail col-sm-12 col-lg-12 col-md-12">
+        <div class="img-thumbnail schema">
+            <a class="fancybox" href="{{url_for('static', filename='img/schema_vrubova_36.jpg')}}" id="grouped_elements" rel="group_schema">
+                <img src="{{url_for('static', filename='img/schema_vrubova_36_thumb.jpg')}}" />
+            </a>
+        </div>
+        <div col-sm-1 col-lg-1 col-md-!>
+            <p>Врубовая, 36</p>
         </div>
     </div>
-    <div class="col-sm-12 col-lg-12 col-md-12">
-        <div class="thumbnail">
-            <div class="img-thumbnail schema">
-                <a class="fancybox" href="{{url_for('static', filename='img/schema_vrubova_40.jpg')}}" id="grouped_elements" rel="group_schema">
-                    <img src="{{url_for('static', filename='img/schema_vrubova_40_thumb.jpg')}}" />
-                </a>
-            </div>
+<div class="row col-sm-12 col-lg-12 col-md-12">
+    <div class="thumbnail col-sm-12 col-lg-12 col-md-12">
+        <div class="img-thumbnail schema">
+            <a class="fancybox" href="{{url_for('static', filename='img/schema_vrubova_40.jpg')}}" id="grouped_elements" rel="group_schema">
+                <img src="{{url_for('static', filename='img/schema_vrubova_40_thumb.jpg')}}" />
+            </a>
+        </div>
+        <div>
+            <p>Врубовая, 40</p>
         </div>
     </div>
 </div>
