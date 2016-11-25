@@ -75,7 +75,7 @@
                     <p class="lead">Категории продукции</p>
                     <div class="list-group">
                     {% for category in categories %}
-                        <a href="{{ url_for('warehouse.index', id=category.id) }}" class="list-group-item">{{ category }}</a>
+                        <a href="{{ url_for('warehouse.index', id=category.id) }}" class="list-group-item">{{ category }} ({{ category.tenants|count }})</a>
                     {% endfor %}
                     </div>
                 </div>
