@@ -4,6 +4,9 @@ from flask import (
     redirect,
     url_for,
 )
+
+from app.database import db
+
 from sqlalchemy.exc import SQLAlchemyError
 
 from .models import Category, Tenant
@@ -54,7 +57,12 @@ def static_page(page_name):
 
 def get_categories():
     try:
-        categories = Category.query.filter(Category.parent_id.is_(None)).all()
+        categories = Category.query.filter(
+            db.and_(
+                Category.parent_id.is_(None),
+                Category.tenants.any()
+            )
+        ).all()
     except SQLAlchemyError as e:
         log_error('Error while querying database', exc_info=e)
         flash('There was uncaught database query', 'danger')
