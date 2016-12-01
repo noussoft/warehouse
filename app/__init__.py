@@ -1,12 +1,13 @@
 import os
+import os.path as op
 
 from flask import Flask
 from flask_admin import Admin
 from flask_migrate import Migrate
 from flask_babelex import Babel
 
-from .warehouse.admin.views import CategoryView, TenantView
-from .warehouse.models import Category, Tenant
+from .warehouse.admin.views import CategoryView, TenantView, JumboImageView
+from .warehouse.models import Category, Tenant, JumboImage
 from .database import db
 
 def create_app():
@@ -22,6 +23,13 @@ def create_app():
     admin = Admin(app, template_mode='bootstrap3')
     admin.add_view(TenantView(Tenant, db.session, name="Арендаторы"))
     admin.add_view(CategoryView(Category, db.session, name="Категории товаров"))
+    admin.add_view(JumboImageView(JumboImage, db.session, name="Изображения (карусель)"))
+
+    images_path = op.join(op.dirname(__file__), 'images')
+    try:
+        os.mkdir(images_path)
+    except OSError:
+        pass
 
     db.init_app(app)
     migrate = Migrate(app, db)
