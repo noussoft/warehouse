@@ -43,3 +43,9 @@ class Tenant(db.Model):
 
     def __str__(self):
         return self.name
+
+class JumboImage(db.Model):
+    __tablename__ = 'jumbo_image'
+
+    id = db.Column(db.Integer, primary_key = True)
+    image = db.Column(db.String(255), index = False)

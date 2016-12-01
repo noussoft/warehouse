@@ -11,7 +11,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from flask_admin.form import thumbgen_filename
 
-from .models import Category, Tenant
+from .models import Category, Tenant, JumboImage
 from ..utils.flask_utils import get_object_or_404
 
 module = Blueprint('warehouse', __name__)
@@ -35,6 +35,7 @@ def index(id):
     return render_template(
         'warehouse/index.html',
         categories=categories,
+        jumbo_images=get_jumbo_images(),
         category=category,
         thumbgen_filename = thumbgen_filename
     )
@@ -71,3 +72,12 @@ def get_categories():
         flash('There was uncaught database query', 'danger')
         abort(500)
     return categories
+
+def get_jumbo_images():
+    try:
+        jumbo_images = JumboImage.query.all()
+    except SQLAlchemyError as e:
+        log_error('Error while querying database', exc_info=e)
+        flash('There was uncaught database query', 'danger')
+        abort(500)
+    return jumbo_images

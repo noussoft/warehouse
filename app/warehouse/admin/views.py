@@ -7,7 +7,8 @@ from wtforms.validators import InputRequired, Email, URL, Regexp
 
 class CategoryView(ModelView):
     column_labels = dict(
-        name='Название категории', main_category='Основная категория'
+        name='Название категории',
+        main_category='Основная категория'
     )
     form_args = {
         'name': {
@@ -77,12 +78,40 @@ class TenantView(ModelView):
         },
     }
     form_extra_fields = {
-        'image': form.ImageUploadField('Image',
+        'image': form.ImageUploadField('Изображение',
                                     base_path='/home/groomy/Python/warehouse/app/static/images',
                                     thumbnail_size=(320, 150, True)
                                      ),
     }
 
+    def _list_thumbnail(view, context, model, name):
+        if not model.image:
+            return ''
+
+        return Markup('<img src="%s">' % url_for('static',
+                                                 filename='images/' + form.thumbgen_filename(model.image)))
+
+    column_formatters = {
+        'image': _list_thumbnail
+    }
+
+class JumboImageView(ModelView):
+    column_labels = dict(
+        image='Изображение'
+    )
+    form_args = {
+        'image': {
+            'label': 'Изображение',
+
+        },
+    }
+    form_extra_fields = {
+        'image': form.ImageUploadField('Изображение',
+                                    base_path='/home/groomy/Python/warehouse/app/static/images',
+                                    thumbnail_size=(800, 300, True),
+                                    validators=[InputRequired("Выберите файл с изображением")]
+                                     ),
+    }
     def _list_thumbnail(view, context, model, name):
         if not model.image:
             return ''
