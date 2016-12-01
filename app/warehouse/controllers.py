@@ -9,6 +9,8 @@ from app.database import db
 
 from sqlalchemy.exc import SQLAlchemyError
 
+from flask_admin.form import thumbgen_filename
+
 from .models import Category, Tenant
 from ..utils.flask_utils import get_object_or_404
 
@@ -33,7 +35,8 @@ def index(id):
     return render_template(
         'warehouse/index.html',
         categories=categories,
-        category=category
+        category=category,
+        thumbgen_filename = thumbgen_filename
     )
 
 @module.route('/tenants/<id>', methods=['GET'])

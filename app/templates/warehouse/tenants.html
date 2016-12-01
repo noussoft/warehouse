@@ -4,7 +4,9 @@
 
 {% block content %}
 <div class="thumbnail">
-    <img class="img-responsive" src="http://placehold.it/800x300" alt="">
+    {% if tenant.image is not none %}
+    <img class="img-responsive" src="{{ url_for('static',                                       filename='images/' + tenant.image) }}" alt="http://placehold.it/800x300">
+    {% endif %}
     <div class="caption-full">
         <h4 class="pull-right">{{ tenant.place|e if tenant.place is not none }}</h4>
         <h4><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">{{ tenant.name }}</a>

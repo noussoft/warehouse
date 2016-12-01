@@ -1,4 +1,8 @@
+from flask import url_for
+from flask_admin import form
 from flask_admin.contrib.sqla import ModelView
+
+from jinja2 import Markup
 from wtforms.validators import InputRequired, Email, URL, Regexp
 
 class CategoryView(ModelView):
@@ -71,4 +75,21 @@ class TenantView(ModelView):
         'categories': {
             'label': 'Категории товара',
         },
+    }
+    form_extra_fields = {
+        'image': form.ImageUploadField('Image',
+                                    base_path='/home/groomy/Python/warehouse/app/static/images',
+                                    thumbnail_size=(320, 150, True)
+                                     ),
+    }
+
+    def _list_thumbnail(view, context, model, name):
+        if not model.image:
+            return ''
+
+        return Markup('<img src="%s">' % url_for('static',
+                                                 filename='images/' + form.thumbgen_filename(model.image)))
+
+    column_formatters = {
+        'image': _list_thumbnail
     }
