@@ -56,7 +56,7 @@ class TenantView(ModelView):
             'validators': [Email("Введите адрес электронной почты.")]
         },
         'www': {
-            'label': 'WWW',
+            'label': 'Сайт',
             'validators': [URL(message="Введите адрес сайта арендатора.")]
         },
         'place': {
