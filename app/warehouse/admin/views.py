@@ -3,7 +3,7 @@ from flask_admin import form
 from flask_admin.contrib.sqla import ModelView
 
 from jinja2 import Markup
-from wtforms.validators import InputRequired, Email, URL, Regexp
+from wtforms.validators import InputRequired, Email, URL, Regexp, Length
 
 class CategoryView(ModelView):
     column_labels = dict(
@@ -46,8 +46,9 @@ class TenantView(ModelView):
         'phone': {
             'label': 'Телефон',
             'validators': [
+                Length(min=10, max=10, message="Длина номера телефона 10 цифр, в формате XXXXXXXXXX"),
                 InputRequired("Введите телефон"),
-                Regexp('\d{10}', message="Телефон в формате XXXXXXXXXX")
+                Regexp(r'^\d{10}$', message="Телефон в формате XXXXXXXXXX")
             ]
         },
         'email': {
