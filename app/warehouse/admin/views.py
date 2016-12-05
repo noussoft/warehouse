@@ -1,9 +1,15 @@
+import os.path as op
+
 from flask import url_for
 from flask_admin import form
 from flask_admin.contrib.sqla import ModelView
 
 from jinja2 import Markup
 from wtforms.validators import InputRequired, Email, URL, Regexp, Length
+
+from werkzeug import secure_filename
+
+UPLOADS_DIR = op.join(op.join(op.join(op.dirname(__file__), '..'), '..'), 'static')
 
 class CategoryView(ModelView):
     column_labels = dict(
@@ -27,6 +33,7 @@ class CategoryView(ModelView):
     }
 
 class TenantView(ModelView):
+    excluded_list_columns = ['about']
     column_labels = dict(
         name='Арендатор',
         phone='Телефон',
@@ -78,11 +85,18 @@ class TenantView(ModelView):
             'label': 'Категории товара',
         },
     }
+
+    def prefix_name(obj, file_data):
+        parts = op.splitext(file_data.filename)
+        return secure_filename('file_{}-{}{}'.format(obj.id, parts[0], parts[1]))
+
     form_extra_fields = {
         'image': form.ImageUploadField('Изображение',
-                                    base_path='/home/groomy/Python/warehouse/app/static/images',
-                                    thumbnail_size=(320, 150, True)
-                                     ),
+                                    base_path=UPLOADS_DIR,
+                                    thumbnail_size=(320, 150, True),
+                                    namegen=prefix_name,
+                                    relative_path='images/'
+                                    ),
     }
 
     def _list_thumbnail(view, context, model, name):
@@ -90,7 +104,7 @@ class TenantView(ModelView):
             return ''
 
         return Markup('<img src="%s">' % url_for('static',
-                                                 filename='images/' + form.thumbgen_filename(model.image)))
+                                                 filename=form.thumbgen_filename(model.image)))
 
     column_formatters = {
         'image': _list_thumbnail
@@ -108,8 +122,9 @@ class JumboImageView(ModelView):
     }
     form_extra_fields = {
         'image': form.ImageUploadField('Изображение',
-                                    base_path='/home/groomy/Python/warehouse/app/static/images',
+                                    base_path=UPLOADS_DIR,
                                     thumbnail_size=(800, 300, True),
+                                    relative_path='jumbo_images/',
                                     validators=[InputRequired("Выберите файл с изображением")]
                                      ),
     }
@@ -118,7 +133,7 @@ class JumboImageView(ModelView):
             return ''
 
         return Markup('<img src="%s">' % url_for('static',
-                                                 filename='images/' + form.thumbgen_filename(model.image)))
+                                                 filename=form.thumbgen_filename(model.image)))
 
     column_formatters = {
         'image': _list_thumbnail

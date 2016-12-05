@@ -16,7 +16,7 @@
             <div class="carousel-inner">
                 {% for jumbo_image in jumbo_images %}
                 <div class="item {% if loop.first %}active{% endif %}">
-                    <img class="slide-image" src="{{ url_for('static', filename='images/' + thumbgen_filename(jumbo_image.image)) }}" alt="">
+                    <img class="slide-image" src="{{ url_for('static', filename=thumbgen_filename(jumbo_image.image)) }}" alt="">
                 </div>
                 {% endfor %}
             </div>
@@ -39,7 +39,7 @@
     <div class="col-sm-4 col-lg-4 col-md-4">
         <div class="thumbnail">
         {% if tenant.image is not none %}
-            <img src="{{ url_for('static', filename='images/' + thumbgen_filename(tenant.image)) }}" alt="http://placehold.it/320x150">
+            <img src="{{ url_for('static', filename=thumbgen_filename(tenant.image)) }}" alt="http://placehold.it/320x150">
         {% endif %}
             <div class="caption">
                 <h4><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">{{ tenant|e }}</a></h4>
