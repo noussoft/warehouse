@@ -35,7 +35,7 @@
 
 {% block content %}
 <div class="row">
-    {% for tenant in category.tenants %}
+    {% for tenant in tenants_page.items %}
     <div class="col-sm-4 col-lg-4 col-md-4">
         <div class="thumbnail">
         {% if tenant.image is not none %}
@@ -54,5 +54,7 @@
         </div>
     </div>
     {% endfor %}
+    {% import 'warehouse/macros/pagination.html' as pagination %}
+    {{ pagination.render_pagination(tenants_page, 'warehouse.index', category.id)}}
 </div>
 {% endblock %}

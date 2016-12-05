@@ -14,6 +14,8 @@ from flask_admin.form import thumbgen_filename
 from .models import Category, Tenant, JumboImage
 from ..utils.flask_utils import get_object_or_404
 
+PAGE_SIZE = 9
+
 module = Blueprint('warehouse', __name__)
 
 allowed_static_pages = ['about', 'contacts', 'schema']
@@ -21,22 +23,28 @@ allowed_static_pages = ['about', 'contacts', 'schema']
 def log_error(*args, **kwargs):
     current_app.logger.error(*args, **kwargs)
 
-
-@module.route('/categories/<id>', methods=['GET'])
 @module.route('/', methods=['GET'], defaults={'id': None})
-def index(id):
+@module.route('/categories/<int:id>', methods=['GET'])
+@module.route('/categories/<int:id>/<int:page>', methods=['GET'])
+
+def index(id, page=1):
     categories = get_categories()
 
     if id is not None:
         category = Category.query.get(id)
     else:
         category = categories[0]
-    
+
+    tenants_page = Tenant.query.filter(
+                    Tenant.categories.contains(category)
+                ).paginate(page, PAGE_SIZE)
+
     return render_template(
         'warehouse/index.html',
         categories=categories,
         jumbo_images=get_jumbo_images(),
         category=category,
+        tenants_page=tenants_page,
         thumbgen_filename = thumbgen_filename
     )
 
