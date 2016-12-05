@@ -25,12 +25,6 @@ def create_app():
     admin.add_view(CategoryView(Category, db.session, name="Категории товаров"))
     admin.add_view(JumboImageView(JumboImage, db.session, name="Изображения (карусель)"))
 
-    images_path = op.join(op.dirname(__file__), 'images')
-    try:
-        os.mkdir(images_path)
-    except OSError:
-        pass
-
     db.init_app(app)
     migrate = Migrate(app, db)
     
