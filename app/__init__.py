@@ -1,5 +1,6 @@
 import os
 import os.path as op
+import flask_whooshalchemy as whooshalchemy
 
 from flask import Flask
 from flask_admin import Admin
@@ -43,5 +44,8 @@ def create_app():
 
     app.register_blueprint(warehouse.module)
     app.register_blueprint(general.module)
+
+    whooshalchemy.whoosh_index(app, Category)
+    whooshalchemy.whoosh_index(app, Tenant)
 
     return app

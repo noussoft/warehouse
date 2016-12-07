@@ -7,6 +7,7 @@ categories_tenants_table = db.Table('categories_tenants',
 
 class Category(db.Model):
     __tablename__ = 'categories'
+    __searchable__ = ['name']
 
     id = db.Column(db.Integer, primary_key = True)
     name =  db.Column(db.String(255), index = True)
@@ -28,6 +29,7 @@ class Category(db.Model):
 
 class Tenant(db.Model):
     __tablename__ = 'tenants'
+    __searchable__ = ['name', 'about']
 
     id = db.Column(db.Integer, primary_key = True)
     name =  db.Column(db.String(255), index = True)

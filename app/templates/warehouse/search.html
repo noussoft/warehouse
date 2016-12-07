@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for result_category in result['categories'] %}
+    {{result_category}}
+{% endfor %}
+{% for result_tenant in result['tenants'] %}
+    {{result_tenant}}
+{% endfor %}
+{% endblock %}

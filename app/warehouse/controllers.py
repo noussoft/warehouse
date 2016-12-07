@@ -58,6 +58,16 @@ def show_tenant(id):
         categories=get_categories()
     )
 
+@module.route('/search/<string:query>/')
+def search(query):
+    categories = Category.query.whoosh_search(query).all()
+    tenants = Tenant.query.whoosh_search(query).all()
+
+    return render_template(
+        'warehouse/search.html',
+        result={'categories': categories, 'tenants': tenants}
+    )
+
 @module.route('/<string:page_name>/')
 def static_page(page_name):
     if page_name in allowed_static_pages:
