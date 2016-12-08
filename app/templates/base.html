@@ -59,9 +59,10 @@
                     </li>
                 </ul>
                 <div >
-                    <form action="{{ url_for('warehouse.index') }}search"id="custom-search-form" class="form-search form-horizontal pull-right">
+                    <form action="{{ url_for('warehouse.search') }}" method="post" id="custom-search-form" class="form-search form-horizontal pull-right">
                         <div class="input-append span12">
-                            <input type="text" class="search-query" placeholder="Поиск">
+                            {{ g.search_form.hidden_tag() }}
+                            {{ g.search_form.query(class_="search-query", placeholder="Поиск", value=query) }}
                             <button type="submit" class="btn"><i class="icon-search"></i></button>
                         </div>
                     </form>
@@ -78,11 +79,11 @@
         <div class="row">
 
             {% block menu_categories %}
-                {% if categories %}
+                {% if g.categories %}
                 <div class="col-md-3">
                     <p class="lead">Категории продукции</p>
                     <div class="list-group">
-                    {% for category in categories %}
+                    {% for category in g.categories %}
                         <a href="{{ url_for('warehouse.index', id=category.id) }}" class="list-group-item">{{ category }} ({{ category.tenants|count }})</a>
                     {% endfor %}
                     </div>
