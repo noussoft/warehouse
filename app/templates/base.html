@@ -47,7 +47,7 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="margin-top: 5px">
                     <li>
                         <a href="{{ url_for('warehouse.static_page', page_name='about') }}">О нас</a>
                     </li>
@@ -58,7 +58,7 @@
                         <a href="{{ url_for('warehouse.static_page', page_name='contacts') }}">Контакты</a>
                     </li>
                 </ul>
-                <div >
+                <div style="margin-top: 10px">
                     <form action="{{ url_for('warehouse.index') }}search"id="custom-search-form" class="form-search form-horizontal pull-right">
                         <div class="input-append span12">
                             <input type="text" class="search-query" placeholder="Поиск">
