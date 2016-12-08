@@ -33,7 +33,7 @@ class CategoryView(ModelView):
     }
 
 class TenantView(ModelView):
-    excluded_list_columns = ['about']
+    column_exclude_list = ['about']
     column_labels = dict(
         name='Арендатор',
         phone='Телефон',
@@ -44,6 +44,7 @@ class TenantView(ModelView):
         about='Информация',
         image='Изображение',
         contact='Конт. лицо',
+        keywords='Ключевые слова'
     )
     form_args = {
         'name': {
@@ -80,6 +81,9 @@ class TenantView(ModelView):
         },
         'contact': {
             'label': 'Контактное лицо',
+        },
+        'keywords': {
+            'label': 'Ключевые слова',
         },
         'categories': {
             'label': 'Категории товара',

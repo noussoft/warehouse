@@ -5,7 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
     DEBUG = False
 
-    CSRF_ENABLED = True
+    WTF_CSRF_ENABLED = True
 
     SECRET_KEY = 'YOUR_RANDOM_SECRET_KEY'
 

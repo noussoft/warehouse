@@ -3,26 +3,6 @@
 {% block meta_title %}{% endblock %}
 
 {% block content %}
-<div class="thumbnail">
-    {% if tenant.image is not none %}
-    <img class="img-responsive" src="{{ url_for('static',                                       filename=tenant.image) }}" alt="{{ tenant.name }}">
-    {% endif %}
-    <div class="caption-full">
-        <h4 class="pull-right">{{ tenant.place|e if tenant.place is not none }}</h4>
-        <h4><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">{{ tenant.name }}</a>
-        </h4>
-        {% if tenant.www is not none %}
-        <p><a target="_blank" href="{{ tenant.www }}">{{ tenant.www|e  }}</a></p>
-        {% endif %}
-        <p>Тел. <strong>8 {{ " (%s) %s-%s-%s"|format(tenant.phone[0:3], tenant.phone[3:6], tenant.phone[6:8], tenant.phone[8:])|e if tenant.phone is not none }}</strong></p>
-        <p>{{ tenant.about|e if tenant.about is not none }}</p>
-        <p>
-            <strong>Категории:</strong>
-            {% for category in tenant.categories %}
-                <a href="{{ url_for('warehouse.index', id=category.id) }}">{{category}}</a>{{',' if not loop.last}}
-            {% endfor %}
-        </p>
-    </div>
-    
-</div>
+{% import 'warehouse/macros/tenant.html' as macros_tenant %}
+{{ macros_tenant.render_tenant(tenant)}}
 {% endblock %}

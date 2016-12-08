@@ -29,7 +29,7 @@ class Category(db.Model):
 
 class Tenant(db.Model):
     __tablename__ = 'tenants'
-    __searchable__ = ['name', 'about']
+    __searchable__ = ['name', 'about', 'keywords']
 
     id = db.Column(db.Integer, primary_key = True)
     name =  db.Column(db.String(255), index = True)
@@ -42,6 +42,7 @@ class Tenant(db.Model):
     about = db.Column(db.Text, index = False)
     image = db.Column(db.String(255), index = False)
     contact = db.Column(db.String(255), index = False)
+    keywords = db.Column(db.String(255), index = True)
 
     def __str__(self):
         return self.name

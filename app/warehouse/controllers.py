@@ -3,6 +3,7 @@ from flask import (
     render_template,
     redirect,
     url_for,
+    g
 )
 
 from app.database import db
@@ -12,6 +13,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_admin.form import thumbgen_filename
 
 from .models import Category, Tenant, JumboImage
+from .forms import SearchForm
 from ..utils.flask_utils import get_object_or_404
 
 PAGE_SIZE = 9
@@ -19,6 +21,11 @@ PAGE_SIZE = 9
 module = Blueprint('warehouse', __name__)
 
 allowed_static_pages = ['about', 'contacts', 'schema']
+
+@module.before_request
+def before_request():
+    g.search_form = SearchForm()
+    g.categories = get_categories()
 
 def log_error(*args, **kwargs):
     current_app.logger.error(*args, **kwargs)
@@ -41,7 +48,6 @@ def index(id, page=1):
 
     return render_template(
         'warehouse/index.html',
-        categories=categories,
         jumbo_images=get_jumbo_images(),
         category=category,
         tenants_page=tenants_page,
@@ -54,26 +60,33 @@ def show_tenant(id):
     tenant = get_object_or_404(Tenant, Tenant.id == id)
     return render_template(
         'warehouse/tenants.html',
-        tenant=tenant,
-        categories=get_categories()
+        tenant=tenant
     )
 
-@module.route('/search/<string:query>/')
-def search(query):
+@module.route('/search/', methods=['POST'])
+def search():
+    type(g.search_form.query)
+    if not g.search_form.validate_on_submit():
+        return redirect(url_for('warehouse.index'))
+    return redirect(url_for('warehouse.search_results', query=g.search_form.query.data))
+
+@module.route('/search_results/<query>')
+def search_results(query):
     categories = Category.query.whoosh_search(query).all()
     tenants = Tenant.query.whoosh_search(query).all()
 
     return render_template(
-        'warehouse/search.html',
-        result={'categories': categories, 'tenants': tenants}
+        'warehouse/search_results.html',
+        query=query,
+        result={'categories': categories, 'tenants': tenants},
+        thumbgen_filename = thumbgen_filename
     )
 
 @module.route('/<string:page_name>/')
 def static_page(page_name):
     if page_name in allowed_static_pages:
         return render_template(
-            'warehouse/%s.html' % page_name,
-            categories=get_categories()
+            'warehouse/%s.html' % page_name
         )
     return redirect(url_for('warehouse.index'))
 
