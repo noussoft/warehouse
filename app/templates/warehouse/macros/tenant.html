@@ -10,7 +10,7 @@
         {% if tenant.www is not none %}
         <p><a target="_blank" href="{{ tenant.www }}">{{ tenant.www|e  }}</a></p>
         {% endif %}
-        <p>Тел. <strong>8 {{ " (%s) %s-%s-%s"|format(tenant.phone[0:3], tenant.phone[3:6], tenant.phone[6:8], tenant.phone[8:])|e if tenant.phone is not none }}</strong></p>
+        <p>Тел. <a href="tel:+7{{tenant.phone}}">8 {{ " (%s) %s-%s-%s"|format(tenant.phone[0:3], tenant.phone[3:6], tenant.phone[6:8], tenant.phone[8:])|e if tenant.phone is not none }}</a></p>
         <p>{{ tenant.about|e if tenant.about is not none }}</p>
         <p>
             <strong>Категории:</strong>

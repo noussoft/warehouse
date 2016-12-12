@@ -6,7 +6,7 @@
     {% endif %}
         <div class="caption">
             <h4><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">{{ tenant|e }}</a></h4>
-            <p>{{ "8 (%s) %s-%s-%s"|format(tenant.phone[:3], tenant.phone[3:5], tenant.phone[5:7],tenant.phone[7:]) |e }}</p>
+            <p><a href="tel:+7{{tenant.phone}}">{{ "8 (%s) %s-%s-%s"|format(tenant.phone[:3], tenant.phone[3:5], tenant.phone[5:7],tenant.phone[7:]) |e }}</a></p>
         {% if tenant.email is not none %}
             <p><a href="mailto:{{ tenant.email|e }}">{{ tenant.email|e }}</a></p>
         {% endif %}
