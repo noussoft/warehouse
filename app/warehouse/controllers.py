@@ -10,7 +10,10 @@ from app.database import db
 
 from sqlalchemy.exc import SQLAlchemyError
 
+from flask import request
 from flask_admin.form import thumbgen_filename
+
+from werkzeug.useragents import UserAgent
 
 from .models import Category, Tenant, JumboImage
 from .forms import SearchForm
@@ -21,11 +24,13 @@ PAGE_SIZE = 9
 module = Blueprint('warehouse', __name__)
 
 allowed_static_pages = ['about', 'contacts', 'schema']
+mobile_platforms = ["iphone", "android", "blackberry"]
 
 @module.before_request
 def before_request():
     g.search_form = SearchForm()
     g.categories = get_categories()
+    g.is_mobile = is_mobile()
 
 def log_error(*args, **kwargs):
     current_app.logger.error(*args, **kwargs)
@@ -112,3 +117,6 @@ def get_jumbo_images():
         flash('There was uncaught database query', 'danger')
         abort(500)
     return jumbo_images
+
+def is_mobile():
+    return UserAgent(request.user_agent.string).platform.lower() in mobile_platforms

@@ -4,5 +4,5 @@
 
 {% block content %}
 {% import 'warehouse/macros/tenant.html' as macros_tenant %}
-{{ macros_tenant.render_tenant(tenant)}}
+{{ macros_tenant.render_tenant(tenant, g.is_mobile)}}
 {% endblock %}

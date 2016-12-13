@@ -37,7 +37,7 @@
 <div class="row">
     {% import 'warehouse/macros/tenant_short.html' as macros_tenant_short %}
     {% for tenant in tenants_page.items %}
-        {{ macros_tenant_short.render_tenant_short(tenant, thumbgen_filename)}}
+        {{ macros_tenant_short.render_tenant_short(tenant, thumbgen_filename, g.is_mobile)}}
     {% endfor %}
     
     {% import 'warehouse/macros/pagination.html' as pagination %}

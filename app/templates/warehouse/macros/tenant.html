@@ -1,4 +1,5 @@
-{% macro render_tenant(tenant) %}
+{% import 'warehouse/macros/phone.html' as macros_phone %}
+{% macro render_tenant(tenant, is_mobile) %}
   <div class="thumbnail">
     {% if tenant.image is not none %}
     <img class="img-responsive" src="{{ url_for('static',                                       filename=tenant.image) }}" alt="{{ tenant.name }}">
@@ -10,7 +11,7 @@
         {% if tenant.www is not none %}
         <p><a target="_blank" href="{{ tenant.www }}">{{ tenant.www|e  }}</a></p>
         {% endif %}
-        <p>Тел. <a href="tel:+7{{tenant.phone}}">8 {{ " (%s) %s-%s-%s"|format(tenant.phone[0:3], tenant.phone[3:6], tenant.phone[6:8], tenant.phone[8:])|e if tenant.phone is not none }}</a></p>
+        {{macros_phone.render_phone(tenant.phone, is_mobile)}}
         <p>{{ tenant.about|e if tenant.about is not none }}</p>
         <p>
             <strong>Категории:</strong>
