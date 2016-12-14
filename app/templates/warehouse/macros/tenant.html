@@ -2,7 +2,7 @@
 {% macro render_tenant(tenant, is_mobile) %}
   <div class="thumbnail">
     {% if tenant.image is not none %}
-    <img class="img-responsive" src="{{ url_for('static',                                       filename=tenant.image) }}" alt="{{ tenant.name }}">
+    <img class="img-responsive" src="{{ url_for('static', filename=tenant.image) }}" alt="{{ tenant.name }}">
     {% endif %}
     <div class="caption-full">
         <h4 class="pull-right">{{ tenant.place|e if tenant.place is not none }}</h4>
