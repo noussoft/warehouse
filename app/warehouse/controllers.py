@@ -38,7 +38,6 @@ def log_error(*args, **kwargs):
 @module.route('/', methods=['GET'], defaults={'id': None})
 @module.route('/categories/<int:id>', methods=['GET'])
 @module.route('/categories/<int:id>/<int:page>', methods=['GET'])
-
 def index(id, page=1):
     categories = get_categories()
 
