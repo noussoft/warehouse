@@ -101,7 +101,7 @@ def get_categories():
                 Category.parent_id.is_(None),
                 Category.tenants.any()
             )
-        ).all()
+        ).order_by(Category.name).all()
     except SQLAlchemyError as e:
         log_error('Error while querying database', exc_info=e)
         flash('There was uncaught database query', 'danger')
