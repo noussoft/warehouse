@@ -14,6 +14,9 @@ class Config(object):
 
     WHOOSH_BASE = os.path.join(basedir, 'search.db')
 
+    SQLALCHEMY_POOL_SIZE = 100
+    SQLALCHEMY_POOL_RECYCLE = 240
+
     # Flask-Security config
     SECURITY_URL_PREFIX = "/admin"
     SECURITY_PASSWORD_HASH = os.environ['SECURITY_PASSWORD_HASH']
