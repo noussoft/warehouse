@@ -42,7 +42,7 @@ def index(id, page=1):
     categories = get_categories()
 
     if id is not None:
-        category = Category.query.get(id)
+        category = get_object_or_404(Category, Category.id == id)
     else:
         category = categories[0]
 
