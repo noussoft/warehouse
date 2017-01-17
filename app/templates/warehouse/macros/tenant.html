@@ -6,8 +6,7 @@
     {% endif %}
     <div class="caption-full">
         <h4 class="pull-right">{{ tenant.place|e if tenant.place is not none }}</h4>
-        <h4><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">{{ tenant.name }}</a>
-        </h4>
+        <h4>{{ tenant.name }}</h4>
         {% if tenant.www is not none %}
         <p><a target="_blank" href="{{ tenant.www }}">{{ tenant.www|e  }}</a></p>
         {% endif %}
