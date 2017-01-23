@@ -35,25 +35,11 @@
 
 {% block content %}
 <div class="row">
+    {% import 'warehouse/macros/tenant_short.html' as macros_tenant_short %}
     {% for tenant in tenants_page.items %}
-    <div class="col-sm-4 col-lg-4 col-md-4">
-        <div class="thumbnail">
-        {% if tenant.image is not none %}
-            <img src="{{ url_for('static', filename=thumbgen_filename(tenant.image)) }}" alt="http://placehold.it/320x150">
-        {% endif %}
-            <div class="caption">
-                <h4><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">{{ tenant|e }}</a></h4>
-                <p>{{ "8 (%s) %s-%s-%s"|format(tenant.phone[:3], tenant.phone[3:5], tenant.phone[5:7],tenant.phone[7:]) |e }}</p>
-            {% if tenant.email is not none %}
-                <p><a href="mailto:{{ tenant.email|e }}">{{ tenant.email|e }}</a></p>
-            {% endif %}
-            {% if tenant.www is not none %}
-                <p><a href="{{ tenant.www|e }}">{{ tenant.www|e }}</a></p>
-            {% endif %}
-            </div>
-        </div>
-    </div>
+        {{ macros_tenant_short.render_tenant_short(tenant, thumbgen_filename, g.is_mobile)}}
     {% endfor %}
+    
     {% import 'warehouse/macros/pagination.html' as pagination %}
     {{ pagination.render_pagination(tenants_page, 'warehouse.index', category.id)}}
 </div>

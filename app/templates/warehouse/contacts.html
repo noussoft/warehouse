@@ -27,9 +27,10 @@
             <p>г. Ростов-на-Дону, ул. Врубовая, 36, 40</p>
             <h3>Контакты</h3>
             <ul>
-                <li>Тел.: 8 863 297-30-49</li>
-                <li>Email: <a href="mailto:personal@bazavrubova.ru">personal@bazavrubova.ru</a></li>
-                <li>WWW: <a href="http://bazavrubova.ru">http://bazavrubova.ru</a></li>
+                <li>Тел.: {% if g.is_mobile %}<a href="tel:88632954799">{% endif %}<span style="font-size:150%;">8 863 295-47-99</span>{% if g.is_mobile %}</a>{% endif %}</li>
+                <li>Тел.: {% if g.is_mobile %}<a href="tel:88632954801">{% endif %}<span style="font-size:150%;">8 863 295-48-01</span>{% if g.is_mobile %}</a>{% endif %}</li>
+                <li>Email: <a href="mailto:rostholod2014@mail.ru">rostholod2014@mail.ru.ru</a></li>
+                <li>WWW: <a href="http://www.bazavrubova.ru">http://www.bazavrubova.ru</a></li>
             </ul>
         </div>
 
@@ -44,19 +45,19 @@
         </div>
 
         <div class="col-sm-3 col-xs-6">
-            <img class="img-responsive portfolio-item" src="{{ url_for('static', filename='img/contacts_image_food_greens.jpg') }}" alt="База на врубовой. Зелень">
+            <img class="img-responsive portfolio-item" src="{{ url_for('static', filename='img/contacts_image_food_first.jpg') }}" alt="База на врубовой. Зелень">
         </div>
 
         <div class="col-sm-3 col-xs-6">
-                <img class="img-responsive portfolio-item" src="{{ url_for('static', filename='img/contacts_image_food_vegetables.jpg') }}" alt="База на врубовой. Овощи">
+                <img class="img-responsive portfolio-item" src="{{ url_for('static', filename='img/contacts_image_food_second.jpg') }}" alt="База на врубовой. Овощи">
         </div>
 
         <div class="col-sm-3 col-xs-6">
-            <img class="img-responsive portfolio-item" src="{{ url_for('static', filename='img/contacts_image_food_milk.jpg') }}" alt="База на врубовой. Молоко">
+            <img class="img-responsive portfolio-item" src="{{ url_for('static', filename='img/contacts_image_food_third.jpg') }}" alt="База на врубовой. Молоко">
         </div>
 
         <div class="col-sm-3 col-xs-6">
-            <img class="img-responsive portfolio-item" src="{{ url_for('static', filename='img/contacts_image_food_fish.jpg') }}" alt="База на врубовой. Рыба">
+            <img class="img-responsive portfolio-item" src="{{ url_for('static', filename='img/contacts_image_food_fourth.jpg') }}" alt="База на врубовой. Рыба">
         </div>
     </div>
     <!-- /.row --> 

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block meta_title %} - Результаты поиска {% endblock %}
+
+{% block content %}
+{% if result['categories'] %}
+    <h3>Найдено в категориях</h3>
+    
+        {% for result_category in result['categories'] %}
+            <a href="{{ url_for('warehouse.index', id=result_category.id) }}" class="list-group-item">{{ result_category }} ({{ result_category.tenants|count }})</a>
+        {% endfor %}
+    
+{% endif %}
+
+{% if result['tenants'] %}
+    <h3>Найдено в арендаторах</h3>
+    <div class="row">
+        {% import 'warehouse/macros/tenant_short.html' as macros_tenant_short %}
+        {% for result_tenant in result['tenants'] %}
+            {{ macros_tenant_short.render_tenant_short(result_tenant, thumbgen_filename)}}
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

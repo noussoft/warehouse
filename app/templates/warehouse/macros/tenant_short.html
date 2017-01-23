@@ -1,0 +1,21 @@
+{% import 'warehouse/macros/phone.html' as macros_phone %}
+{% macro render_tenant_short(tenant, thumbgen_filename, is_mobile) %}
+<div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="thumbnail">
+        {% if tenant.image is not none %}
+        <img src="{{ url_for('static', filename=thumbgen_filename(tenant.image)) }}" alt="{{ tenant|e }}">
+        {% endif %}
+        <div class="caption">
+            <h4><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">{{ tenant|e }}</a></h4>
+            {{macros_phone.render_phone(tenant.phone, is_mobile)}}
+        {% if tenant.email is not none %}
+            <p><a href="mailto:{{ tenant.email|e }}">{{ tenant.email|e }}</a></p>
+        {% endif %}
+        {% if tenant.www is not none %}
+            <p><a href="{{ tenant.www|e }}">{{ tenant.www|e }}</a></p>
+        {% endif %}
+            <p align="right"><a href="{{ url_for('warehouse.show_tenant', id=tenant.id) }}">Подробнее ...</a></p>
+        </div>
+    </div>
+</div>
+{% endmacro %}

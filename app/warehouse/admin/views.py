@@ -3,6 +3,7 @@ import os.path as op
 from flask import url_for
 from flask_admin import form
 from flask_admin.contrib.sqla import ModelView
+from flask_security import current_user
 
 from jinja2 import Markup
 from wtforms.validators import InputRequired, Email, URL, Regexp, Length
@@ -11,7 +12,31 @@ from werkzeug import secure_filename
 
 UPLOADS_DIR = op.join(op.join(op.join(op.dirname(__file__), '..'), '..'), 'static')
 
-class CategoryView(ModelView):
+# Create customized model view class
+class MyModelView(ModelView):
+
+    def is_accessible(self):
+        if not current_user.is_active or not current_user.is_authenticated:
+            return False
+
+        if current_user.has_role('superuser'):
+            return True
+
+        return False
+
+    def _handle_view(self, name, **kwargs):
+        """
+        Override builtin _handle_view in order to redirect users when a view is not accessible.
+        """
+        if not self.is_accessible():
+            if current_user.is_authenticated:
+                # permission denied
+                abort(403)
+            else:
+                # login
+                return redirect(url_for('security.login', next=request.url))
+
+class CategoryView(MyModelView):
     column_labels = dict(
         name='Название категории',
         main_category='Основная категория'
@@ -32,8 +57,8 @@ class CategoryView(ModelView):
         },
     }
 
-class TenantView(ModelView):
-    excluded_list_columns = ['about']
+class TenantView(MyModelView):
+    column_exclude_list = ['about']
     column_labels = dict(
         name='Арендатор',
         phone='Телефон',
@@ -44,6 +69,7 @@ class TenantView(ModelView):
         about='Информация',
         image='Изображение',
         contact='Конт. лицо',
+        keywords='Ключевые слова'
     )
     form_args = {
         'name': {
@@ -81,6 +107,9 @@ class TenantView(ModelView):
         'contact': {
             'label': 'Контактное лицо',
         },
+        'keywords': {
+            'label': 'Ключевые слова',
+        },
         'categories': {
             'label': 'Категории товара',
         },
@@ -110,7 +139,7 @@ class TenantView(ModelView):
         'image': _list_thumbnail
     }
 
-class JumboImageView(ModelView):
+class JumboImageView(MyModelView):
     column_labels = dict(
         image='Изображение'
     )
