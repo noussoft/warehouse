@@ -118,4 +118,7 @@ def get_jumbo_images():
     return jumbo_images
 
 def is_mobile():
-    return UserAgent(request.user_agent.string).platform.lower() in mobile_platforms
+    if (UserAgent(request.user_agent.string).platform):
+        return UserAgent(request.user_agent.string).platform.lower() in mobile_platforms
+    else:
+        return False
